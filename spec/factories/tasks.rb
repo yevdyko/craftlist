@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :task do
-    description "MyText"
+    description 'Buy milk'
     completed false
   end
 end
