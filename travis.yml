@@ -1,0 +1,31 @@
+sudo: required
+dist: trusty
+addons:
+  apt:
+    sources:
+      - ubuntu-sdk-team
+    packages:
+      - libqt5webkit5-dev
+      - qtdeclarative5-dev
+
+language: ruby
+
+rvm:
+  - 2.4.1
+
+cache:
+  bundler: true
+
+bundler_args: --without production
+
+script:
+
+before_install:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - export QMAKE=/usr/lib/x86_64-linux-gnu/qt5/bin/qmake
+
+script:
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
+  - CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN bundle exec rspec && bundle exec codeclimate-test-reporter
