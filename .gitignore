@@ -28,3 +28,6 @@ ehthumbs.db
 Thumbs.db
 /public/packs
 /node_modules
+
+* Ignore Coveralls folder
+/coverage
