@@ -2,7 +2,9 @@ const propTypes = {
   tasks: React.PropTypes.array,
   task: React.PropTypes.object,
   description: React.PropTypes.string,
-  completed: React.PropTypes.bool
+  completed: React.PropTypes.bool,
+  handleUpdateTask: React.PropTypes.func,
+  addTask: React.PropTypes.func
 };
 
 const defaultProps = {

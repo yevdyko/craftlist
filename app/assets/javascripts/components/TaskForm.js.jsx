@@ -1,3 +1,7 @@
+const propTypes = {
+  handleSubmit: React.PropTypes.func
+};
+
 class TaskForm extends React.Component {
   constructor(props) {
     super(props);
@@ -7,15 +11,22 @@ class TaskForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    this.props.handleNewTask(
-      this.props.task
-    );
-
-    this.setState({
-      task: {
-        description: '',
-        completed: false
+    let that = this;
+    $.ajax({
+      type: 'POST',
+      url: '/tasks',
+      data: { task: that.props.task },
+      success: function(data) {
+        that.props.handleNewTask(data);
+        that.setState({
+          task: {
+            description: '',
+            completed: false
+          }
+        });
+      },
+      error: function(xhr, status, error) {
+        alert('Cannot add a new task: ', status, xhr, error);
       }
     });
   }
