@@ -22,6 +22,6 @@ feature 'User views tasks' do
   end
 
   def have_displayed_tasks(count)
-    have_css('.task__list .task__item', count: count)
+    have_css('.cr-task__list .cr-task__item', count: count)
   end
 end
