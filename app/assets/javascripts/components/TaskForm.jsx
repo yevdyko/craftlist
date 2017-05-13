@@ -33,17 +33,15 @@ class TaskForm extends React.Component {
 
   render() {
     return (
-      <form className="form-inline" onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <input 
-            type="text" 
-            className="form-control cr-form-control"
-            placeholder="New task"
-            name="description" 
-            value={this.props.task.description}
-            onChange={this.props.handleUpdateTask} 
-          />
-        </div>
+      <form className="form-inline cr-form-inline" onSubmit={this.handleSubmit}>
+        <input
+          type="text"
+          className="form-control cr-form-control"
+          placeholder="New task"
+          name="description"
+          value={this.props.task.description}
+          onChange={this.props.handleUpdateTask}
+        />
         <button type="submit" className="btn btn-add">
           Add task
         </button>
