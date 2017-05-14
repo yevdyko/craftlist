@@ -3,14 +3,14 @@ const propTypes = {
   task: React.PropTypes.object,
   description: React.PropTypes.string,
   completed: React.PropTypes.bool,
-  handleUpdateTask: React.PropTypes.func,
-  addTask: React.PropTypes.func
+  handleSubmit: React.PropTypes.func,
+  handleUpdateTask: React.PropTypes.func
 };
 
 const defaultProps = {
   tasks: [],
   task: {
-    description: 'Book vacation',
+    description: '',
     completed: false
   }
 };
@@ -27,7 +27,7 @@ class TaskApp extends React.Component {
       }
     };
 
-    this.addTask = this.addTask.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdateTask = this.handleUpdateTask.bind(this);
   }
 
@@ -40,9 +40,30 @@ class TaskApp extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    let that = this;
+    $.ajax({
+      type: 'POST',
+      url: '/tasks',
+      data: { task: that.state.task },
+      success: function(data) {
+        that.addTask(data);
+        that.setState({
+          task: {
+            description: '',
+            completed: false
+          }
+        });
+      },
+      error: function(xhr, status, error) {
+        alert('Cannot add a new task: ', status, xhr, error);
+      }
+    });
+  }
+
   addTask(task) {
-    const newTaskList = this.state.tasks;
-    newTaskList.push(task);
+    const newTaskList = this.state.tasks.concat([task]);
     this.setState({
       tasks: newTaskList,
       task: {
@@ -61,7 +82,7 @@ class TaskApp extends React.Component {
               <Title />
               <TaskList tasks={this.state.tasks} />
               <TaskForm 
-                handleNewTask={this.addTask}
+                handleSubmit={this.handleSubmit}
                 handleUpdateTask={this.handleUpdateTask}
                 task={this.state.task} 
               />
