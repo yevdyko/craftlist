@@ -9,7 +9,7 @@ function TaskForm(props) {
         value={props.task.description}
         onChange={props.handleUpdateTask}
       />
-      <button type="submit" className="btn btn-add">
+      <button type="submit" className="btn btn-submit">
         Add task
       </button>
     </form>
