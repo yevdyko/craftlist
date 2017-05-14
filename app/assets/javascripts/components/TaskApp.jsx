@@ -79,7 +79,7 @@ class TaskApp extends React.Component {
         <div className="row text-center">
           <div className="col-md-6 col-md-offset-3">
             <div className="cr-task">
-              <Title />
+              <TaskTitle />
               <TaskList tasks={this.state.tasks} />
               <TaskForm 
                 handleSubmit={this.handleSubmit}
