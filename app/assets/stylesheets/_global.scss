@@ -10,3 +10,9 @@ body {
   height: 100%;
   background: linear-gradient(40deg, $violet 10%, $magenta 100%);
 }
+
+input[type="checkbox"] {
+  margin-top: 4px;
+  margin-right: 8px;
+  vertical-align: top;
+}

@@ -4,7 +4,8 @@ const propTypes = {
   description: React.PropTypes.string,
   completed: React.PropTypes.bool,
   handleSubmit: React.PropTypes.func,
-  handleUpdateTask: React.PropTypes.func
+  handleUpdateTask: React.PropTypes.func,
+  handleCompleted: React.PropTypes.func
 };
 
 const defaultProps = {
@@ -29,6 +30,7 @@ class TaskApp extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdateTask = this.handleUpdateTask.bind(this);
+    this.handleCompleted = this.handleCompleted.bind(this);
   }
 
   handleUpdateTask(event) {
@@ -57,7 +59,7 @@ class TaskApp extends React.Component {
         });
       },
       error: function(xhr, status, error) {
-        alert('Cannot add a new task: ', status, xhr, error);
+        alert('Cannot add a new task: ', error);
       }
     });
   }
@@ -73,6 +75,19 @@ class TaskApp extends React.Component {
     });
   }
 
+  handleCompleted(description) {
+    let tasks = this.state.tasks;
+    let task = tasks.filter((task) => {
+      return task.description === description;
+    })[0];
+
+    task.completed = !task.completed;
+
+    this.setState({
+      tasks
+    });
+  }
+
   render() {
     return (
       <div className="container">
@@ -80,11 +95,14 @@ class TaskApp extends React.Component {
           <div className="col-md-6 col-md-offset-3">
             <div className="cr-task">
               <TaskTitle />
-              <TaskList tasks={this.state.tasks} />
+              <TaskList
+                handleCompleted={this.handleCompleted}
+                tasks={this.state.tasks}
+              />
               <TaskForm 
                 handleSubmit={this.handleSubmit}
                 handleUpdateTask={this.handleUpdateTask}
-                task={this.state.task} 
+                task={this.state.task}
               />
             </div>
           </div>
@@ -96,3 +114,4 @@ class TaskApp extends React.Component {
 
 TaskApp.propTypes = propTypes;
 TaskApp.defaultProps = defaultProps;
+ 

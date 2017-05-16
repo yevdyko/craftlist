@@ -17,11 +17,14 @@
     height: 40px;
     margin-bottom: 2px;
     padding: 10px;
-    font-size: 14px;
-    line-height: 20px;
     color: $black;
     text-align: left;
     background-color: $white;
     border-radius: $border-radius-base;
+  }
+
+  &__text {
+    font-size: 14px;
+    line-height: 20px;
   }
 }
