@@ -28,8 +28,8 @@ class TaskApp extends React.Component {
       }
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdateTask = this.handleUpdateTask.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCompleted = this.handleCompleted.bind(this);
   }
 
@@ -49,6 +49,7 @@ class TaskApp extends React.Component {
       type: 'POST',
       url: '/tasks',
       data: { task: that.state.task },
+      dataType: 'json',
       success: function(data) {
         that.addTask(data);
         that.setState({
@@ -59,7 +60,23 @@ class TaskApp extends React.Component {
         });
       },
       error: function(xhr, status, error) {
-        alert('Cannot add a new task: ', error);
+        console.log('Failed to add a new task: ', error);
+      }
+    });
+  }
+
+  handleCompleted(task) {
+    let that = this;
+    $.ajax({
+      type: 'PUT',
+      url: `/tasks/${task.id}`,
+      data: { task: task },
+      dataType: 'json',
+      success: function(data) {
+        that.markTaskComplete(data);
+      },
+      error: function(xhr, status, error) {
+        console.log('Failed to mark task as complete/incomplete: ', error);
       }
     });
   }
@@ -75,13 +92,15 @@ class TaskApp extends React.Component {
     });
   }
 
-  handleCompleted(description) {
+  markTaskComplete(task) {
     let tasks = this.state.tasks;
-    let task = tasks.filter((task) => {
-      return task.description === description;
+    const taskId = task.id
+
+    const currentTask = tasks.filter((task) => {
+      return task.id === taskId;
     })[0];
 
-    task.completed = !task.completed;
+    currentTask.completed = !currentTask.completed;
 
     this.setState({
       tasks

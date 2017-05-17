@@ -1,7 +1,6 @@
 class TaskItem extends React.Component {
   render() {
     let task = this.props.task;
-    let description = task.description;
     let _style = 'line-through';
 
     if (!task.completed) {
@@ -13,7 +12,7 @@ class TaskItem extends React.Component {
         <input
           type="checkbox"
           checked={task.completed}
-          onChange={this.props.handleCompleted.bind(null, description)}
+          onChange={this.props.handleCompleted.bind(null, task)}
         />
         <span className="cr-task__text" style={{'textDecoration': _style}}>
           {task.description}

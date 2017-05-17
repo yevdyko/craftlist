@@ -16,6 +16,7 @@ The user should be able to change the ordering of the tasks using Drag & Drop. T
 
 - Adding tasks to the end of the list without page reload
 - Storing tasks in the database and restoring them after the page reload
+- Showing completed/incompleted tasks
 
 ## The most interesting parts
 
@@ -64,7 +65,6 @@ To run the tests:
 
 ## Todo
 
-- [ ] Add showing completed/incompleted tasks
 - [ ] Add sorting tasks using Drag and Drop 
 - [ ] Unlimited Drag and Drop subtasks
 

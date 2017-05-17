@@ -13,6 +13,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def update
+    task = Task.find(params[:id])
+
+    if task.update(task_params)
+      render json: task
+    else
+      render json: { errors: task.errors }, status: :unproccesable_entity
+    end
+  end
+
   private
 
     def task_params
