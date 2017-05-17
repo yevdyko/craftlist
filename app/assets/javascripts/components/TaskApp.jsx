@@ -5,7 +5,8 @@ const propTypes = {
   completed: React.PropTypes.bool,
   handleSubmit: React.PropTypes.func,
   handleUpdateTask: React.PropTypes.func,
-  handleCompleted: React.PropTypes.func
+  handleCompleted: React.PropTypes.func,
+  handleDelete: React.PropTypes.func
 };
 
 const defaultProps = {
@@ -31,6 +32,7 @@ class TaskApp extends React.Component {
     this.handleUpdateTask = this.handleUpdateTask.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCompleted = this.handleCompleted.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleUpdateTask(event) {
@@ -81,6 +83,21 @@ class TaskApp extends React.Component {
     });
   }
 
+  handleDelete(task) {
+    let that = this;
+    $.ajax({
+      type: 'DELETE',
+      url: `/tasks/${task.id}`,
+      dataType: 'json',
+      success: function() {
+        that.deleteTask(task);
+      },
+      error: function(xhr, status, error) {
+        console.log('Failed to delete a task: ', error);
+      }
+    });
+  }
+
   addTask(task) {
     const newTaskList = this.state.tasks.concat([task]);
     this.setState({
@@ -107,6 +124,18 @@ class TaskApp extends React.Component {
     });
   }
 
+  deleteTask(task) {
+    const taskId = task.id;
+
+    const newTaskList = this.state.tasks.filter((task) => {
+      return task.id !== taskId;
+    } )
+
+    this.setState({
+      tasks: newTaskList
+    });
+  }
+
   render() {
     return (
       <div className="container">
@@ -116,6 +145,7 @@ class TaskApp extends React.Component {
               <TaskTitle />
               <TaskList
                 handleCompleted={this.handleCompleted}
+                handleDelete={this.handleDelete}
                 tasks={this.state.tasks}
               />
               <TaskForm 

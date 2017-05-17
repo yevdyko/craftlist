@@ -17,6 +17,7 @@ The user should be able to change the ordering of the tasks using Drag & Drop. T
 - Adding tasks to the end of the list without page reload
 - Storing tasks in the database and restoring them after the page reload
 - Showing completed/incompleted tasks
+- Deleting tasks
 
 ## The most interesting parts
 
@@ -70,7 +71,7 @@ To run the tests:
 
 ## Additional features
 
-- [ ] Add deleting tasks
+- [x] Add deleting tasks
 - [ ] Use Webpacker instead of Asset Pipeline
 - [ ] Add tests using Jest
 - [ ] Add editing tasks

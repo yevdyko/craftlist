@@ -6,6 +6,7 @@ function TaskList(props) {
           key={task.id}
           task={task}
           handleCompleted={props.handleCompleted}
+          handleDelete={props.handleDelete}
         />
       ))}
     </ul>

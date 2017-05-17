@@ -9,6 +9,12 @@ class TaskItem extends React.Component {
 
     return (
       <li className="cr-task__item">
+        <button
+          className="btn btn-delete pull-right"
+          onClick={this.props.handleDelete.bind(null, task)}
+        >
+          <span className="glyphicon glyphicon-remove cr-icon-remove"></span>
+        </button>
         <input
           type="checkbox"
           checked={task.completed}
