@@ -17,7 +17,7 @@ const defaultProps = {
   }
 };
 
-class TaskApp extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -43,63 +43,77 @@ class TaskApp extends React.Component {
       }
     });
   }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    let that = this;
+  
+  makeAjaxCall(type, url, params, successCallback, errorMessage) {
     $.ajax({
-      type: 'POST',
-      url: '/tasks',
-      data: { task: that.state.task },
+      type: type,
+      url: url,
+      data: {
+        task: params
+      },
       dataType: 'json',
       success: function(data) {
-        that.addTask(data);
-        that.setState({
-          task: {
-            description: '',
-            completed: false
-          }
-        });
+        console.log('data: ', data);
+        successCallback(data);
       },
       error: function(xhr, status, error) {
-        console.log('Failed to add a new task: ', error);
+        console.log(errorMessage, error);
       }
     });
   }
 
-  handleCompleted(task) {
+  
+  handleSubmit(event) {
+    event.preventDefault();
+    
     let that = this;
-    $.ajax({
-      type: 'PUT',
-      url: `/tasks/${task.id}`,
-      data: { task: task },
-      dataType: 'json',
-      success: function(data) {
-        that.markTaskComplete(data);
-      },
-      error: function(xhr, status, error) {
-        console.log('Failed to mark task as complete/incomplete: ', error);
-      }
-    });
+    const url = '/tasks';
+    const params = that.state.task;
+    const errorMessage = 'Failed to add a new task: ';
+    const successCallback = (data) => {
+      that.addTask(data);
+      that.setState({
+        task: {
+          description: '',
+          completed: false
+        }
+      });
+    };
+    
+    that.makeAjaxCall('POST', url, params, successCallback, errorMessage);
+  }
+  
+  handleCompleted(task) {
+    event.preventDefault();
+    
+    let that = this;
+    const url = `/tasks/${task.id}`;
+    const params = task;
+    const errorMessage = 'Failed to mark task as complete/incomplete: ';
+
+    const successCallback = () => {
+      that.markTaskComplete(task);
+    };
+    
+    that.makeAjaxCall('PUT', url, params, successCallback, errorMessage);
   }
 
   handleDelete(task) {
+    event.preventDefault();
+    
     let that = this;
-    $.ajax({
-      type: 'DELETE',
-      url: `/tasks/${task.id}`,
-      dataType: 'json',
-      success: function() {
-        that.deleteTask(task);
-      },
-      error: function(xhr, status, error) {
-        console.log('Failed to delete a task: ', error);
-      }
-    });
+    const url = `/tasks/${task.id}`;
+    const errorMessage = 'Failed to delete a task: ';
+    const successCallback = () => {
+      that.deleteTask(task);
+    };
+    
+    that.makeAjaxCall('DELETE', url, {}, successCallback, errorMessage);
   }
 
   addTask(task) {
     const newTaskList = this.state.tasks.concat([task]);
+    
     this.setState({
       tasks: newTaskList,
       task: {
@@ -119,9 +133,7 @@ class TaskApp extends React.Component {
 
     currentTask.completed = !currentTask.completed;
 
-    this.setState({
-      tasks
-    });
+    this.setState({ tasks });
   }
 
   deleteTask(task) {
@@ -129,7 +141,7 @@ class TaskApp extends React.Component {
 
     const newTaskList = this.state.tasks.filter((task) => {
       return task.id !== taskId;
-    } )
+    });
 
     this.setState({
       tasks: newTaskList
@@ -161,6 +173,5 @@ class TaskApp extends React.Component {
   }
 }
 
-TaskApp.propTypes = propTypes;
-TaskApp.defaultProps = defaultProps;
- 
+App.propTypes = propTypes;
+App.defaultProps = defaultProps;
