@@ -2,6 +2,7 @@
   "name": "craftlist",
   "private": true,
   "dependencies": {
+    "@rails/webpacker": "^3.0.1",
     "autoprefixer": "^7.0.1",
     "babel-core": "^6.24.1",
     "babel-loader": "7.x",
@@ -20,10 +21,10 @@
     "postcss-loader": "^2.0.3",
     "postcss-smart-import": "^0.6.13",
     "precss": "^1.4.0",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.5.10",
     "rails-erb-loader": "^5.0.0",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "sass-loader": "^6.0.4",
     "style-loader": "^0.17.0",
     "webpack": "^2.5.1",
@@ -31,7 +32,7 @@
     "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.7.1"
   },
   "version": "1.0.2"
 }

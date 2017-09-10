@@ -13,7 +13,6 @@
 !/log/.keep
 !/tmp/.keep
 
-/node_modules
 /yarn-error.log
 
 .byebug_history
@@ -26,7 +25,10 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Webpack
 /public/packs
+/public/packs-test
 /node_modules
 
 * Ignore Coveralls folder
