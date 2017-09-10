@@ -1,4 +1,6 @@
-class TaskItem extends React.Component {
+import React from 'react';
+
+export default class TaskItem extends React.Component {
   render() {
     let task = this.props.task;
     let _style = 'line-through';

@@ -1,4 +1,7 @@
-function TaskList(props) {
+import React from 'react';
+import TaskItem from './TaskItem';
+
+const TaskList = (props) => {
   return (
     <ul className="cr-task__list">
       {props.tasks.map((task) => (
@@ -12,3 +15,5 @@ function TaskList(props) {
     </ul>
   );
 }
+
+export default TaskList;

@@ -1,4 +1,6 @@
-function TaskForm(props) {
+import React from 'react';
+
+const TaskForm = (props) => {
   return (
     <form className="form-inline cr-form-inline" onSubmit={props.handleSubmit}>
       <input
@@ -15,3 +17,5 @@ function TaskForm(props) {
     </form>
   );
 }
+
+export default TaskForm;

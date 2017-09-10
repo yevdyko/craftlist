@@ -16,7 +16,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap-sass'
 gem 'sass-rails', '~> 5.0'
 gem 'slim-rails'
-gem 'react-rails'
 gem 'webpacker', github: 'rails/webpacker'
 
 group :development, :test do

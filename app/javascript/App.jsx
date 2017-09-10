@@ -1,32 +1,40 @@
+import React from 'react';
+import { render } from 'react-dom';
+import PropTypes from 'prop-types';
+
+import TaskTitle from './components/TaskTitle';
+import TaskList from './components/TaskList';
+import TaskForm from './components/TaskForm';
+
 const propTypes = {
-  tasks: React.PropTypes.array,
-  task: React.PropTypes.object,
-  description: React.PropTypes.string,
-  completed: React.PropTypes.bool,
-  handleSubmit: React.PropTypes.func,
-  handleUpdateTask: React.PropTypes.func,
-  handleCompleted: React.PropTypes.func,
-  handleDelete: React.PropTypes.func
+  tasks: PropTypes.array,
+  task: PropTypes.object,
+  description: PropTypes.string,
+  completed: PropTypes.bool,
+  handleSubmit: PropTypes.func,
+  handleUpdateTask: PropTypes.func,
+  handleCompleted: PropTypes.func,
+  handleDelete: PropTypes.func,
 };
 
 const defaultProps = {
   tasks: [],
   task: {
     description: '',
-    completed: false
-  }
+    completed: false,
+  },
 };
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      tasks: this.props.data,
+      tasks: this.props.tasks,
       task: {
         description: '',
-        completed: false
-      }
+        completed: false,
+      },
     };
 
     this.handleUpdateTask = this.handleUpdateTask.bind(this);
@@ -39,17 +47,17 @@ class App extends React.Component {
     this.setState({
       task: {
         description: event.target.value,
-        completed: false
-      }
+        completed: false,
+      },
     });
   }
-  
+
   makeAjaxCall(type, url, params, successCallback, errorMessage) {
     $.ajax({
       type: type,
       url: url,
       data: {
-        task: params
+        task: params,
       },
       dataType: 'json',
       success: function(data) {
@@ -58,34 +66,33 @@ class App extends React.Component {
       },
       error: function(xhr, status, error) {
         console.log(errorMessage, error);
-      }
+      },
     });
   }
 
-  
   handleSubmit(event) {
     event.preventDefault();
-    
+
     let that = this;
     const url = '/tasks';
     const params = that.state.task;
     const errorMessage = 'Failed to add a new task: ';
-    const successCallback = (data) => {
+    const successCallback = data => {
       that.addTask(data);
       that.setState({
         task: {
           description: '',
-          completed: false
-        }
+          completed: false,
+        },
       });
     };
-    
+
     that.makeAjaxCall('POST', url, params, successCallback, errorMessage);
   }
-  
+
   handleCompleted(task) {
     event.preventDefault();
-    
+
     let that = this;
     const url = `/tasks/${task.id}`;
     const params = task;
@@ -94,40 +101,40 @@ class App extends React.Component {
     const successCallback = () => {
       that.markTaskComplete(task);
     };
-    
+
     that.makeAjaxCall('PUT', url, params, successCallback, errorMessage);
   }
 
   handleDelete(task) {
     event.preventDefault();
-    
+
     let that = this;
     const url = `/tasks/${task.id}`;
     const errorMessage = 'Failed to delete a task: ';
     const successCallback = () => {
       that.deleteTask(task);
     };
-    
+
     that.makeAjaxCall('DELETE', url, {}, successCallback, errorMessage);
   }
 
   addTask(task) {
     const newTaskList = this.state.tasks.concat([task]);
-    
+
     this.setState({
       tasks: newTaskList,
       task: {
         description: '',
-        completed: false
-      }
+        completed: false,
+      },
     });
   }
 
   markTaskComplete(task) {
     let tasks = this.state.tasks;
-    const taskId = task.id
+    const taskId = task.id;
 
-    const currentTask = tasks.filter((task) => {
+    const currentTask = tasks.filter(task => {
       return task.id === taskId;
     })[0];
 
@@ -139,12 +146,12 @@ class App extends React.Component {
   deleteTask(task) {
     const taskId = task.id;
 
-    const newTaskList = this.state.tasks.filter((task) => {
+    const newTaskList = this.state.tasks.filter(task => {
       return task.id !== taskId;
     });
 
     this.setState({
-      tasks: newTaskList
+      tasks: newTaskList,
     });
   }
 
@@ -160,7 +167,7 @@ class App extends React.Component {
                 handleDelete={this.handleDelete}
                 tasks={this.state.tasks}
               />
-              <TaskForm 
+              <TaskForm
                 handleSubmit={this.handleSubmit}
                 handleUpdateTask={this.handleUpdateTask}
                 task={this.state.task}
